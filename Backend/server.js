@@ -30,7 +30,7 @@ setInterval(async () => {
     latency: +(net[0]?.tx_sec || 0), 
     error_rate: Math.floor(Math.random() * 3), 
     request_count: Math.floor(Math.random() * 500), 
-    success_rate: 100 
+    success_rate: Math.floor(Math.random() * 101)
   });
 }, 1000);
 
