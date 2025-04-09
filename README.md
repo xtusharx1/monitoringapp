@@ -184,7 +184,7 @@ Click the sun/moon icon in the top-right corner to switch between light and dark
 
 -----
 
-**#🎥 Demo**
+**🎥 Demo**
 
 A screen recording demonstrating the application's features is available here:
 
