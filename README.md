@@ -2,40 +2,80 @@
 
 A configurable, real-time dashboard for monitoring system and application performance metrics using WebSockets and React.
 
-**🚀 Features**
+## 🚀 Features
 
-- **Customizable Dashboard Layout**
-  Drag, drop, and resize widgets using react-grid-layout.
+- **Customizable Dashboard Layout**  
+  Drag, drop, and resize widgets using `react-grid-layout` with automatic **overlap prevention** for a clean UI.
+
 - **Widget Types**
-  - **Line Chart**: Visualizes time-series data
-  - **Gauge**: Displays current values against thresholds
-  - **Key Metric**: Shows a single important value with trends
-- **Real-Time Metrics via WebSocket**
-  Backend server streams **live CPU and memory stats** from the host machine using native OS modules.
-- **Dashboard Configuration**
-  Add/remove widgets, choose metric types, and set refresh intervals.
-- **Persistent Layout**
-  Dashboard state is saved in localStorage.
-- **Dark/Light Mode**
-  Toggle between dark and light themes.
+  - 📈 **Line Chart** – Visualizes time-series data like CPU or memory usage.
+  - 🧭 **Gauge** – Displays current values with color-coded thresholds:
+    - 🔵 **Normal**: Below warning threshold  
+    - 🟠 **Warning**: Between warning and critical  
+    - 🔴 **Critical**: Above critical threshold  
+  - 🔢 **Key Metric** – Shows a single KPI with optional trends.
+
+- **Real-Time Metrics via WebSocket**  
+  Backend streams **live system stats** (CPU %, memory usage) using native OS modules and WebSocket.
+
+- **Widget Configuration**
+  - Add/remove widgets with a customizable dropdown.
+  - Choose metric type, set refresh interval, and update widget titles.
+  - Configure thresholds for gauge widgets (min, max, warning, critical).
+  - Dropdown-based metric selector allows users to build their own widget setup.
+
+- **Persistent Layout & State (💾 localStorage)**  
+  The dashboard layout, widget settings, and theme are saved across sessions.
+
+- **Dark/Light Mode (🌓)**  
+  Toggle between light and dark themes using the switch in the header.
+
+- **Responsive UI (📱)**  
+  Fully responsive and usable on desktop, tablet, and mobile devices.
+
+- **WebSocket Connection Handling (🔌)**  
+  Displays a user-friendly connection error screen if WebSocket connection fails.
+
 -----
-**🧠 Tech Stack**
+## 🧠 Tech Stack
 
-**Frontend:**
+### 🔧 Frontend:
+- **React.js** – UI development
+- **Zustand** – Lightweight state management to store widget configs and layout
+- **react-grid-layout** – Handles drag-and-resize for widgets
+- **Recharts** – For visualizing metric data (Line charts, Gauges, etc.)
+- **Lucide React** – For icons
+- **WebSocket Client** – For receiving real-time data updates
 
-- React.js
-- Zustand (state management)
-- react-grid-layout (drag & resize)
-- Recharts (charts)
-- Lucide React (icons)
-- WebSocket client
+### 🖥️ Backend:
+- **Node.js + Express** – Basic backend server setup
+- **ws** – WebSocket server to push real-time metric data
+- **os (built-in Node module)** – Used to simulate system stats like CPU and memory usage
 
-**Backend:**
+-----
+## 🧱 Architecture
 
-- Node.js
-- Express
-- ws (WebSocket library)
-- os (to gather system stats)
+The app follows a simple yet scalable architecture:
+
+1. **Component-Based Frontend**  
+   All UI elements like widgets, modals, and buttons are built as reusable React components inside the `components/` folder.
+
+2. **Centralized State Management**  
+   I used Zustand to keep track of the dashboard state — this includes layout, widget configurations, and refresh intervals. It’s lightweight and easier to use than Redux for this size of app.
+
+3. **Real-Time Data Layer**  
+   The frontend connects to a WebSocket server running on Node.js. It sends back simulated metric data at regular intervals. If the connection drops, an error screen is shown with clean UI feedback.
+
+4. **Persistence with localStorage**  
+   The dashboard layout, selected metrics, and widget settings are saved using localStorage. So even if the user refreshes the page, their dashboard remains intact.
+
+5. **Responsive Grid Layout**  
+   I used `react-grid-layout` to make widgets draggable and resizable. It also handles layout saving and responsiveness for mobile, tablet, and desktop views.
+
+6. **Error Handling**  
+   Wrapped the dashboard in an `ErrorBoundary` to avoid crashes from unexpected widget bugs. Also, if the WebSocket fails, the UI doesn’t break — instead, it shows a clear “disconnected” screen.
+
+
 -----
 
 **Project Structure:**
