@@ -98,9 +98,10 @@ const GaugeWidget = ({ widget, onSettingsClick, size }) => {
           overflow: hidden;
           padding: 12px;
           box-sizing: border-box;
-          background-color: ${isDarkMode ? '#1f2937' : '#ffffff'};
+          background-color: ${isDarkMode ? '#253145' : '#ffffff'};
           border-radius: 8px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          box-shadow: ${isDarkMode ? '0 4px 10px rgba(0, 0, 0, 0.4)' : '0 2px 4px rgba(0, 0, 0, 0.1)'};
+          border: ${isDarkMode ? '1px solid #2d3a4f' : 'none'};
         }
         
         .widget-header {
@@ -114,14 +115,14 @@ const GaugeWidget = ({ widget, onSettingsClick, size }) => {
           margin: 0;
           font-size: 16px;
           font-weight: 500;
-          color: ${isDarkMode ? '#e5e7eb' : '#374151'};
+          color: ${isDarkMode ? '#e2e8f0' : '#374151'};
         }
         
         .widget-settings-btn {
           background: none;
           border: none;
           cursor: pointer;
-          color: ${isDarkMode ? '#9ca3af' : '#6b7280'};
+          color: ${isDarkMode ? '#94a3b8' : '#6b7280'};
           padding: 4px;
           border-radius: 4px;
           display: flex;
@@ -152,10 +153,11 @@ const GaugeWidget = ({ widget, onSettingsClick, size }) => {
         
         .gauge {
           width: 100%;
-          background-color: ${isDarkMode ? '#374151' : '#e5e7eb'};
+          background-color: ${isDarkMode ? '#1e2734' : '#e5e7eb'};
           border-radius: 4px;
           overflow: hidden;
           position: relative;
+          border: ${isDarkMode ? '1px solid #2d3a4f' : 'none'};
         }
         
         .gauge-fill {
@@ -176,19 +178,20 @@ const GaugeWidget = ({ widget, onSettingsClick, size }) => {
         
         .value {
           font-size: 24px;
+          text-shadow: ${isDarkMode ? '0 1px 2px rgba(0,0,0,0.5)' : 'none'};
         }
         
         .unit {
           font-size: 14px;
           margin-left: 4px;
-          color: ${isDarkMode ? '#9ca3af' : '#6b7280'};
+          color: ${isDarkMode ? '#b4bfd0' : '#6b7280'};
         }
         
         .gauge-limits {
           display: flex;
           justify-content: space-between;
           font-size: 12px;
-          color: ${isDarkMode ? '#9ca3af' : '#6b7280'};
+          color: ${isDarkMode ? '#b4bfd0' : '#6b7280'};
         }
       `}</style>
     </div>

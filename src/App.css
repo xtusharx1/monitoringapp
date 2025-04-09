@@ -60,7 +60,7 @@ body {
 }
 
 .dashboard-dark .dashboard-header {
-  background-color: #3e444b;
+  background-color: #253145;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   border-color: #212935;
 }
@@ -305,62 +305,11 @@ body {
   transition: none !important; /* Ensure instant reversion */
 }
 
-/* Widget buttons */
-.widget-settings-btn,
-.widget-remove-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-}
 
-.dashboard-light .widget-settings-btn,
-.dashboard-light .widget-remove-btn {
-  color: #6b7280;
-}
 
-.dashboard-dark .widget-settings-btn,
-.dashboard-dark .widget-remove-btn {
-  color: #9ca3af;
-}
 
-.dashboard-light .widget-settings-btn:hover,
-.dashboard-light .widget-remove-btn:hover {
-  background-color: #f3f4f6;
-  color: #1f2937;
-}
 
-.dashboard-dark .widget-settings-btn:hover,
-.dashboard-dark .widget-remove-btn:hover {
-  background-color: #4b5563;
-  color: #f3f4f6;
-}
 
-.widget-settings-btn {
-  position: relative;
-  z-index: 20;
-  padding: 8px;
-  margin-left: 8px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.widget-dark .widget-settings-btn {
-  background-color: #192431;
-  border-color: #3e444b;
-}
-
-.widget-settings-btn:hover {
-  background-color: #3b82f6 !important;
-  color: white !important;
-}
 
 /* Buttons */
 .btn {
@@ -959,4 +908,711 @@ body {
   align-items: center;
   gap: 8px;
   transition: all 0.2s ease;
+}
+
+/* App Container */
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+.app-state-error {
+  background-color: #fdf7f7;
+}
+
+.app-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* App Header with Status Indicator */
+.app-header {
+  padding: 12px 24px;
+  background-color: white;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: flex-end;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.connection-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #606060;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-dot.connected {
+  background-color: #4caf50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+/* Loading Screen */
+.loading-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+}
+
+.loading-icon, .connecting-icon {
+  margin-bottom: 24px;
+  color: #3498db;
+}
+
+.spinning-icon {
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-screen h2, .connecting-screen h2 {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: #2c3e50;
+}
+
+.loading-screen p, .connecting-screen p {
+  font-size: 16px;
+  color: #7f8c8d;
+  max-width: 400px;
+  line-height: 1.5;
+}
+
+/* Connecting Screen */
+.connecting-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+}
+
+.progress-bar {
+  width: 240px;
+  height: 4px;
+  background-color: #e0e0e0;
+  border-radius: 2px;
+  margin-top: 24px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  position: absolute;
+  height: 100%;
+  width: 30%;
+  background-color: #3498db;
+  border-radius: 2px;
+  animation: progress 1.5s infinite ease-in-out;
+}
+
+@keyframes progress {
+  0% { left: -30%; }
+  100% { left: 100%; }
+}
+
+/* Error Screen */
+.error-screen {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.error-content {
+  max-width: 500px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.error-icon {
+  color: #e74c3c;
+  margin-bottom: 24px;
+}
+
+.error-content h1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #2c3e50;
+}
+
+.error-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background-color: #fff5f5;
+  border-left: 4px solid #e74c3c;
+  padding: 16px;
+  margin-bottom: 24px;
+  border-radius: 4px;
+  text-align: left;
+}
+
+.error-message p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.error-message svg {
+  color: #e74c3c;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.status-text {
+  color: #7f8c8d;
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+.reconnect-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
+}
+
+.reconnect-button:hover {
+  background-color: #2980b9;
+}
+
+.reconnect-button:active {
+  transform: translateY(1px);
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .app-container {
+    background-color: #1a1a2e;
+    color: #e5e5e5;
+  }
+  
+  .app-header {
+    background-color: #16213e;
+    border-bottom-color: #262d40;
+  }
+  
+  .connection-indicator {
+    color: #a5a5a5;
+  }
+  
+  .error-content {
+    background-color: #16213e;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  .error-content h1 {
+    color: #e5e5e5;
+  }
+  
+  .error-message {
+    background-color: rgba(231, 76, 60, 0.1);
+  }
+  
+  .error-message p {
+    color: #e5e5e5;
+  }
+  
+  .loading-screen h2, .connecting-screen h2 {
+    color: #e5e5e5;
+  }
+  
+  .loading-screen p, .connecting-screen p, .status-text {
+    color: #a5a5a5;
+  }
+  
+  .progress-bar {
+    background-color: #2a2a3c;
+  }
+  
+  .app-state-error {
+    background-color: #1e1a23;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  .error-content {
+    padding: 30px 20px;
+    margin: 0 16px;
+  }
+  
+  .error-content h1 {
+    font-size: 24px;
+  }
+  
+  .loading-screen h2, .connecting-screen h2 {
+    font-size: 22px;
+  }
+}
+
+/* App Container with Theme Support */
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light Theme */
+.app-container.light-theme {
+  background-color: #f5f7fa;
+  color: #333;
+}
+
+/* Dark Theme */
+.app-container.dark-theme {
+  background-color: #253145;
+  color: #e5e5e5;
+}
+
+/* Error States */
+.app-container.light-theme.app-state-error {
+  background-color: #fdf7f7;
+}
+
+.app-container.dark-theme.app-state-error {
+  background-color: #1e1a23;
+}
+
+.app-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* App Header with Status Indicator */
+.app-header {
+  padding: 12px 24px;
+  display: flex;
+  justify-content: flex-end;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Light theme header */
+.light-theme .app-header {
+  background-color: white;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Dark theme header */
+.dark-theme .app-header {
+  background-color: #253145;
+  border-bottom: 1px solid #262d40;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.connection-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.light-theme .connection-indicator {
+  color: #606060;
+}
+
+.dark-theme .connection-indicator {
+  color: #a5a5a5;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-dot.connected {
+  background-color: #4caf50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+/* Loading Screen */
+.loading-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+}
+
+.loading-icon, .connecting-icon {
+  margin-bottom: 24px;
+  color: #3498db;
+}
+
+.spinning-icon {
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-screen h2, .connecting-screen h2 {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  transition: color 0.3s ease;
+}
+
+.light-theme .loading-screen h2, 
+.light-theme .connecting-screen h2 {
+  color: #2c3e50;
+}
+
+.dark-theme .loading-screen h2, 
+.dark-theme .connecting-screen h2 {
+  color: #e5e5e5;
+}
+
+.loading-screen p, .connecting-screen p {
+  font-size: 16px;
+  max-width: 400px;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+}
+
+.light-theme .loading-screen p, 
+.light-theme .connecting-screen p {
+  color: #7f8c8d;
+}
+
+.dark-theme .loading-screen p, 
+.dark-theme .connecting-screen p {
+  color: #a5a5a5;
+}
+
+/* Connecting Screen */
+.connecting-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+}
+
+.progress-bar {
+  width: 240px;
+  height: 4px;
+  border-radius: 2px;
+  margin-top: 24px;
+  overflow: hidden;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.light-theme .progress-bar {
+  background-color: #e0e0e0;
+}
+
+.dark-theme .progress-bar {
+  background-color: #2a2a3c;
+}
+
+.progress-fill {
+  position: absolute;
+  height: 100%;
+  width: 30%;
+  background-color: #3498db;
+  border-radius: 2px;
+  animation: progress 1.5s infinite ease-in-out;
+}
+
+@keyframes progress {
+  0% { left: -30%; }
+  100% { left: 100%; }
+}
+
+/* Error Screen */
+.error-screen {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.error-content {
+  max-width: 500px;
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  animation: fadeIn 0.5s ease-out;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.light-theme .error-content {
+  background-color: white;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.dark-theme .error-content {
+  background-color: #16213e;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.error-icon {
+  color: #e74c3c;
+  margin-bottom: 24px;
+}
+
+.error-content h1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  transition: color 0.3s ease;
+}
+
+.light-theme .error-content h1 {
+  color: #2c3e50;
+}
+
+.dark-theme .error-content h1 {
+  color: #e5e5e5;
+}
+
+.error-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-left: 4px solid #e74c3c;
+  padding: 16px;
+  margin-bottom: 24px;
+  border-radius: 4px;
+  text-align: left;
+  transition: background-color 0.3s ease;
+}
+
+.light-theme .error-message {
+  background-color: #fff5f5;
+}
+
+.dark-theme .error-message {
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+.error-message p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+}
+
+.light-theme .error-message p {
+  color: #333;
+}
+
+.dark-theme .error-message p {
+  color: #e5e5e5;
+}
+
+.error-message svg {
+  color: #e74c3c;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.status-text {
+  margin-bottom: 32px;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+}
+
+.light-theme .status-text {
+  color: #7f8c8d;
+}
+
+.dark-theme .status-text {
+  color: #a5a5a5;
+}
+
+.reconnect-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.light-theme .reconnect-button {
+  box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
+}
+
+.dark-theme .reconnect-button {
+  box-shadow: 0 2px 5px rgba(52, 152, 219, 0.4);
+}
+
+.reconnect-button:hover {
+  background-color: #2980b9;
+}
+
+.reconnect-button:active {
+  transform: translateY(1px);
+}
+
+/* Replace system-based dark mode with explicit theme classes */
+/* The theme toggling is now handled by the theme classes (dark-theme/light-theme) */
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  .error-content {
+    padding: 30px 20px;
+    margin: 0 16px;
+  }
+  
+  .error-content h1 {
+    font-size: 24px;
+  }
+  
+  .loading-screen h2, .connecting-screen h2 {
+    font-size: 22px;
+  }
+}
+.error-content {
+  max-width: 500px;
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  animation: fadeIn 0.5s ease-out;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.light-theme .error-content {
+  background-color: white;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.dark-theme .error-content {
+  background-color: #16213e;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.error-icon {
+  color: #e74c3c;
+  margin-bottom: 24px;
+}
+
+.error-content h1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 32px;
+  transition: color 0.3s ease;
+}
+
+.light-theme .error-content h1 {
+  color: #2c3e50;
+}
+
+.dark-theme .error-content h1 {
+  color: #e5e5e5;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.reconnect-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.light-theme .reconnect-button {
+  box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
+}
+
+.dark-theme .reconnect-button {
+  box-shadow: 0 2px 5px rgba(52, 152, 219, 0.4);
+}
+
+.reconnect-button:hover {
+  background-color: #2980b9;
+}
+
+.reconnect-button:active {
+  transform: translateY(1px);
 }

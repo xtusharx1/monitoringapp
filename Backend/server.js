@@ -13,15 +13,12 @@ const io = new Server(server, {
 app.use(cors());
 
 io.on('connection', async (socket) => {
-  // Send system memory info on initial connection
   const mem = await si.mem();
   const totalMemoryMB = Math.round(mem.total / (1024 * 1024));
   socket.emit('system_info', { totalMemoryMB });
-
-  console.log(`🔌 Client connected - Total RAM: ${totalMemoryMB} MB`);
+  
 });
 
-// Real-time metric broadcast every second
 setInterval(async () => {
   const cpu = await si.currentLoad();
   const mem = await si.mem();
@@ -29,11 +26,11 @@ setInterval(async () => {
 
   io.emit('systemMetrics', {
     cpu_usage: +cpu.currentLoad.toFixed(1),
-    memory_usage: +(mem.used / (1024 * 1024)).toFixed(1), // MB
-    latency: +(net[0]?.tx_sec || 0), // Placeholder
-    error_rate: Math.floor(Math.random() * 3), // Placeholder
-    request_count: Math.floor(Math.random() * 500), // Placeholder
-    success_rate: 100 // Static for now
+    memory_usage: +(mem.used / (1024 * 1024)).toFixed(1), 
+    latency: +(net[0]?.tx_sec || 0), 
+    error_rate: Math.floor(Math.random() * 3), 
+    request_count: Math.floor(Math.random() * 500), 
+    success_rate: 100 
   });
 }, 1000);
 

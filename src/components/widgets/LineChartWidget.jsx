@@ -1,55 +1,15 @@
 import React, { useEffect } from 'react';
-import { 
-  LineChart, 
-  Line, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer 
-} from 'recharts';
 import { Settings } from 'lucide-react';
 import { useDashboardStore } from '../../store/dashboardStore';
 import { metricsSimulator } from '../../utils/dataSimulator';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip } from 'recharts';
 
-const LineChartWidget = ({ 
-  widget, 
-  onSettingsClick, 
-  size = { height: 250 } 
-}) => {
-  const { 
-    metric, 
-    title, 
-    refreshInterval, 
-    timeWindow = 15, 
-    min = 0,
-    max = 100,
-    thresholds = { warning: max * 0.8, critical: max * 0.9 }
-  } = widget;
-
+const LineChartWidget = ({ widget, onSettingsClick, size }) => {
+  const { metric, title, refreshInterval, color, showGrid } = widget;
   const { metrics, addMetricDataPoint, isDarkMode } = useDashboardStore();
 
   const metricData = metrics[metric] || [];
-  const timeWindowMs = timeWindow * 60 * 1000; 
-  const currentTime = Date.now();
-  const filteredData = metricData.filter(
-    point => currentTime - point.timestamp < timeWindowMs
-  );
-
-  const chartData = filteredData
-    .sort((a, b) => a.timestamp - b.timestamp)
-    .map(point => ({
-      time: new Date(point.timestamp).toLocaleTimeString([], {
-        hour: '2-digit', 
-        minute: '2-digit'
-      }),
-      value: point.value,
-    }));
-
-  const latestValue = filteredData.length > 0 
-    ? filteredData[filteredData.length - 1].value 
-    : 0;
-
+  
   useEffect(() => {
     metricsSimulator.startSimulation(metric, refreshInterval, (value) => {
       addMetricDataPoint(metric, value);
@@ -78,88 +38,76 @@ const LineChartWidget = ({
     }
   };
 
-  const getColor = () => {
-    if (latestValue >= thresholds.critical) return '#ef4444';  
-    if (latestValue >= thresholds.warning) return '#f97316';
-    return '#3b82f6'; 
+  const getLatestValue = () => {
+    if (metricData.length === 0) return 0;
+    return metricData[metricData.length - 1].value;
   };
 
-  const chartHeight = Math.max(100, (size.height || 250) - 100);
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
+  };
 
   return (
-    <div className={`widget-inner ${isDarkMode ? 'widget-dark' : 'widget-light'}`}>
+    <div className="widget-inner">
       <div className="widget-header">
         <h3 className="widget-title">{title}</h3>
         <button 
           type="button"
           className="widget-settings-btn" 
           onClick={(e) => {
-            e.stopPropagation(); 
+            e.stopPropagation();
             onSettingsClick();
           }}
-          title="Edit Widget Settings"
         >
           <Settings size={14} />
         </button>
       </div>
       <div className="widget-content">
-        <div className="chart-container">
-          <ResponsiveContainer width="100%" height={chartHeight}>
-            <LineChart data={chartData}>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={metricData}>
+            {showGrid && (
               <CartesianGrid 
                 strokeDasharray="3 3" 
-                stroke={isDarkMode ? '#374151' : '#e5e7eb'}
+                stroke={isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'} 
               />
-              <XAxis 
-                dataKey="time" 
-                tick={{ 
-                  fontSize: 12, 
-                  fill: isDarkMode ? '#9ca3af' : '#6b7280' 
-                }}
-                tickFormatter={(time) => time.split(':')[0] + ':' + time.split(':')[1]}
-              />
-              <YAxis 
-                domain={[min, max]}
-                tick={{ 
-                  fontSize: 12, 
-                  fill: isDarkMode ? '#9ca3af' : '#6b7280' 
-                }}
-              />
-              <Tooltip 
-                formatter={(value) => [
-                  `${Number(value).toFixed(1)} ${getUnit()}`, 
-                  'Value'
-                ]}
-                contentStyle={{ 
-                  backgroundColor: isDarkMode ? '#1f2937' : '#ffffff',
-                  borderColor: isDarkMode ? '#374151' : '#e5e7eb',
-                  color: isDarkMode ? '#e5e7eb' : '#374151'
-                }}
-              />
-              <Line 
-                type="monotone" 
-                dataKey="value" 
-                stroke={getColor()} 
-                strokeWidth={2} 
-                dot={false} 
-                activeDot={{ r: 4 }}
-                isAnimationActive={false}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-          
-          <div className="chart-value">
-            <span className="value" style={{ color: getColor() }}>
-              {latestValue.toFixed(1)}
-            </span>
-            <span className="unit">{getUnit()}</span>
-          </div>
-          <div className="chart-limits">
-            <span>{min}{getUnit()}</span>
-            <span>{max}{getUnit()}</span>
-          </div>
+            )}
+            <XAxis 
+              dataKey="timestamp" 
+              tick={{ fontSize: 10 }}
+              tickFormatter={formatTimestamp}
+              stroke={isDarkMode ? '#94a3b8' : '#6b7280'}
+            />
+            <YAxis 
+              tick={{ fontSize: 10 }}
+              stroke={isDarkMode ? '#94a3b8' : '#6b7280'}
+            />
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: isDarkMode ? '#253145' : '#ffffff',
+                borderColor: isDarkMode ? '#2d3a4f' : '#e5e7eb',
+                color: isDarkMode ? '#e2e8f0' : '#374151'
+              }}
+              labelFormatter={formatTimestamp}
+              formatter={(value) => [`${value.toFixed(1)}${getUnit()}`, metric]}
+            />
+            <Line 
+              type="monotone" 
+              dataKey="value" 
+              stroke={color || '#3b82f6'} 
+              dot={false}
+              strokeWidth={2}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="widget-footer">
+        <div className="metric-value">
+          <span className="value">{getLatestValue().toFixed(1)}</span>
+          <span className="unit">{getUnit()}</span>
         </div>
       </div>
+
       <style jsx>{`
         .widget-inner {
           display: flex;
@@ -169,9 +117,10 @@ const LineChartWidget = ({
           overflow: hidden;
           padding: 12px;
           box-sizing: border-box;
-          background-color: ${isDarkMode ? '#1f2937' : '#ffffff'};
+          background-color: ${isDarkMode ? '#253145' : '#ffffff'};
           border-radius: 8px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          box-shadow: ${isDarkMode ? '0 4px 10px rgba(0, 0, 0, 0.4)' : '0 2px 4px rgba(0, 0, 0, 0.1)'};
+          border: ${isDarkMode ? '1px solid #2d3a4f' : 'none'};
         }
         
         .widget-header {
@@ -185,14 +134,14 @@ const LineChartWidget = ({
           margin: 0;
           font-size: 16px;
           font-weight: 500;
-          color: ${isDarkMode ? '#e5e7eb' : '#374151'};
+          color: ${isDarkMode ? '#e2e8f0' : '#374151'};
         }
         
         .widget-settings-btn {
           background: none;
           border: none;
           cursor: pointer;
-          color: ${isDarkMode ? '#9ca3af' : '#6b7280'};
+          color: ${isDarkMode ? '#94a3b8' : '#6b7280'};
           padding: 4px;
           border-radius: 4px;
           display: flex;
@@ -213,37 +162,27 @@ const LineChartWidget = ({
           width: 100%;
         }
         
-        .chart-container {
+        .widget-footer {
           display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          width: 100%;
-          height: 100%;
+          justify-content: center;
+          margin-top: 12px;
         }
         
-        .chart-value {
+        .metric-value {
           display: flex;
           align-items: baseline;
-          justify-content: center;
-          margin: 12px 0;
-          font-weight: 700;
         }
         
         .value {
-          font-size: 24px;
+          font-size: 20px;
+          font-weight: 700;
+          color: ${isDarkMode ? '#e2e8f0' : '#374151'};
         }
         
         .unit {
-          font-size: 14px;
-          margin-left: 4px;
-          color: ${isDarkMode ? '#9ca3af' : '#6b7280'};
-        }
-        
-        .chart-limits {
-          display: flex;
-          justify-content: space-between;
           font-size: 12px;
-          color: ${isDarkMode ? '#9ca3af' : '#6b7280'};
+          margin-left: 4px;
+          color: ${isDarkMode ? '#94a3b8' : '#6b7280'};
         }
       `}</style>
     </div>

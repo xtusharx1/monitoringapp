@@ -102,56 +102,6 @@ const KeyMetricWidget = ({ widget, onSettingsClick, size }) => {
         </div>
       </div>
       <style jsx>{`
-        .widget-inner {
-          display: flex;
-          flex-direction: column;
-          height: 100%;
-          width: 100%;
-          overflow: hidden;
-          padding: 12px;
-          box-sizing: border-box;
-          background-color: ${isDarkMode ? '#1f2937' : '#ffffff'};
-          border-radius: 8px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .widget-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 12px;
-        }
-        
-        .widget-title {
-          margin: 0;
-          font-size: 16px;
-          font-weight: 500;
-          color: ${isDarkMode ? '#e5e7eb' : '#374151'};
-        }
-        
-        .widget-settings-btn {
-          background: none;
-          border: none;
-          cursor: pointer;
-          color: ${isDarkMode ? '#9ca3af' : '#6b7280'};
-          padding: 4px;
-          border-radius: 4px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        
-        .widget-settings-btn:hover {
-          background-color: ${isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'};
-        }
-        
-        .widget-content {
-          flex: 1;
-          min-height: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
         
         .key-metric-container {
           display: flex;
