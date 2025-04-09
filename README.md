@@ -88,7 +88,7 @@ A configurable, real-time dashboard for monitoring system and application perfor
 
 **1. Clone the Repository**
 
-git clone https://github.com/yourusername/apm-dashboard.git
+git clone https://github.com/xtusharx1/monitoringapp
 
 cd apm-dashboard
 
@@ -123,21 +123,60 @@ WebSocket will start at:
 Make sure ports 3000 (frontend) and 4000 (backend) are available on your machine.
 
 -----
-**🧪 Usage**
+## 🧪 Usage
 
-**Adding Widgets**
+This real-time dashboard helps visualize system metrics with customizable, interactive widgets.
 
-1. Click "Add Widget" in the top-right corner
-1. Choose a widget type (Line Chart, Gauge, or Key Metric)
-1. Select a metric (CPU, Memory, etc.)
-1. Set refresh interval
-1. Click **Add**
+---
 
-**Customize the Dashboard**
+### ➕ Add a Widget
 
-- **Move Widgets**: Drag and move anywhere but you cant stack the widget
-- **Resize Widgets**: Use the edge or corners
-- **Remove Widgets**: Right click and close the widget
+1. Click the **"Add Widget"** button in the top-right corner.
+2. Select a **widget type**:
+   - Line Chart 📊  
+   - Gauge 📈  
+   - Key Metric 🔢
+3. Choose a **metric** (e.g., CPU, Memory, etc.).
+4. Set the **refresh interval**.
+5. Click **"Add"** to place the widget on the dashboard.
+
+> ℹ️ Metrics are limited for now, but the structure supports dynamic additions through the dropdown.
+
+---
+
+### 🎛️ Customize the Dashboard
+
+- 🧲 **Drag and Resize**:  
+  - Move widgets anywhere using drag-and-drop  
+  - Resize from edges or corners  
+  - Overlapping is **automatically prevented** for clean layout
+- 🖱️ **Right-Click Context Menu**:  
+  - Right-click a widget to open options  
+  - Use **"Delete"** to remove it
+- 🌓 **Light/Dark Theme Toggle**:  
+  - Switch between themes using the toggle in the header
+
+---
+
+### 💾 Persistence with localStorage
+
+- Your dashboard state (widgets, size, layout, selected metrics) is automatically saved using `localStorage`
+- Everything stays intact even after refreshing or reopening the browser
+
+---
+
+### 🔌 WebSocket Disconnection Handling
+
+- If the app fails to connect to the WebSocket server, a **graceful full-screen error UI** is displayed  
+- No data or widgets are lost — just a clean notification of the issue
+
+---
+
+### 📱 Mobile Friendly
+
+- The dashboard is **fully responsive**  
+  - Tested on mobile, tablet, and desktop  
+  - Widgets resize and rearrange to fit all screen sizes
 -----
 **🌙 Theme Toggle**
 
