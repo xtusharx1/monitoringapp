@@ -1,0 +1,962 @@
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* App container */
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Dashboard container - Wrapper for scaling */
+.dashboard-container {
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+  position: relative;
+}
+
+/* Dashboard */
+.dashboard {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  padding: 20px;
+  transition: background-color 0.3s ease;
+}
+
+/* Light/Dark mode */
+.dashboard-light {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: inherit;
+}
+
+.dashboard-light .dashboard-header {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-color: #e5e7eb;
+}
+
+.dashboard-dark .dashboard-header {
+  background-color: #3e444b;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-color: #212935;
+}
+
+
+.dashboard-header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.dashboard-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Widgets Container */
+.widgets-container {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 120px); /* Adjust for header height */
+}
+
+/* Widget styles */
+.widget-container {
+  position: absolute;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.1s ease; /* Smooth movement for normal operations */
+  cursor: move;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.dashboard-light .widget-container {
+  background-color: white;
+}
+
+.dashboard-dark .widget-container {
+  background-color: #374151;
+}
+
+.widget-container:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+.widget-container:active {
+  z-index: 999; /* Higher z-index when active */
+}
+
+/* Widget header */
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid;
+  position: relative;
+  z-index: 5;
+}
+/* Context menu styling */
+.widget-context-menu {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 8px;
+  z-index: 1000;
+  min-width: 160px;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.dashboard-dark .widget-context-menu {
+  background-color: #374151;
+  border-color: #4b5563;
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.dashboard-light .context-menu-item {
+  color: #1f2937;
+}
+
+.dashboard-dark .context-menu-item {
+  color: #f3f4f6;
+}
+
+.context-menu-item:hover {
+  background-color: #f3f4f6;
+}
+
+.dashboard-dark .context-menu-item:hover {
+  background-color: #4b5563;
+}
+
+.context-menu-item.danger {
+  color: #ef4444;
+}
+
+.context-menu-item.danger:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.dashboard-dark .context-menu-item.danger:hover {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+.dashboard-light .widget-header {
+  border-color: #e5e7eb;
+}
+
+.dashboard-dark .widget-header {
+  border-color: #4b5563;
+}
+
+.widget-header .widget-title {
+  margin-right: 40px; /* Make space for the settings button */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.widget-content {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Resize handles styles */
+.resize-handle {
+  position: absolute;
+  background-color: rgba(0, 123, 255, 0.8);
+  border: 1px solid rgba(0, 123, 255, 1);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  z-index: 100;
+  transition: transform 0.15s ease, background-color 0.15s ease, opacity 0.2s ease;
+  opacity: 0;
+}
+
+/* North */
+.resize-n {
+  top: -6px;
+  left: calc(50% - 5px);
+  cursor: n-resize;
+}
+
+/* South */
+.resize-s {
+  bottom: -6px;
+  left: calc(50% - 5px);
+  cursor: s-resize;
+}
+
+/* East */
+.resize-e {
+  right: -6px;
+  top: calc(50% - 5px);
+  cursor: e-resize;
+}
+
+/* West */
+.resize-w {
+  left: -6px;
+  top: calc(50% - 5px);
+  cursor: w-resize;
+}
+
+/* Northeast */
+.resize-ne {
+  right: -6px;
+  top: -6px;
+  cursor: ne-resize;
+}
+
+/* Northwest */
+.resize-nw {
+  left: -6px;
+  top: -6px;
+  cursor: nw-resize;
+}
+
+/* Southeast */
+.resize-se {
+  right: -6px;
+  bottom: -6px;
+  cursor: se-resize;
+}
+
+/* Southwest */
+.resize-sw {
+  left: -6px;
+  bottom: -6px;
+  cursor: sw-resize;
+}
+
+/* Widget container hover effects for handles */
+.widget-container:hover .resize-n, 
+.widget-container:hover .resize-s,
+.widget-container:hover .resize-e,
+.widget-container:hover .resize-w,
+.widget-container:hover .resize-ne,
+.widget-container:hover .resize-nw,
+.widget-container:hover .resize-se,
+.widget-container:hover .resize-sw {
+  opacity: 0; /* Still hidden by default when hovering widget */
+}
+
+/* Make resize handles visible on hover and when active */
+.resize-handle:hover, 
+.resize-handle-active,
+.widget-container:hover .resize-handle:hover {
+  transform: scale(1.3);
+  background-color: rgba(0, 123, 255, 1);
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.7);
+  opacity: 1;
+}
+
+/* Overlap indicator */
+.widget-overlap {
+  border: 2px dashed red !important;
+  background-color: rgba(255, 0, 0, 0.1);
+  z-index: 1000 !important; /* Ensure the dragging widget stays on top */
+  transition: none !important; /* Ensure instant reversion */
+}
+
+/* Widget buttons */
+.widget-settings-btn,
+.widget-remove-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.dashboard-light .widget-settings-btn,
+.dashboard-light .widget-remove-btn {
+  color: #6b7280;
+}
+
+.dashboard-dark .widget-settings-btn,
+.dashboard-dark .widget-remove-btn {
+  color: #9ca3af;
+}
+
+.dashboard-light .widget-settings-btn:hover,
+.dashboard-light .widget-remove-btn:hover {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+.dashboard-dark .widget-settings-btn:hover,
+.dashboard-dark .widget-remove-btn:hover {
+  background-color: #4b5563;
+  color: #f3f4f6;
+}
+
+.widget-settings-btn {
+  position: relative;
+  z-index: 20;
+  padding: 8px;
+  margin-left: 8px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.widget-dark .widget-settings-btn {
+  background-color: #192431;
+  border-color: #3e444b;
+}
+
+.widget-settings-btn:hover {
+  background-color: #3b82f6 !important;
+  color: white !important;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-icon {
+  padding: 0.5rem;
+  border-radius: 4px;
+  background: transparent;
+}
+
+.dashboard-light .btn-icon {
+  color: #555;
+}
+
+.dashboard-dark .btn-icon {
+  color: #f0f0f0;
+}
+
+.dashboard-light .btn-icon:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-dark .btn-icon:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-primary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Theme toggle */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.theme-toggle-light {
+  background-color: #e5e7eb;
+  color: #4b5563;
+}
+
+.theme-toggle-dark {
+  background-color: #37383b;
+  color: #e5e7eb;
+}
+
+.theme-toggle-light:hover {
+  background-color: #d1d5db;
+}
+
+.theme-toggle-dark:hover {
+  background-color: #6b7280;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
+}
+
+.modal {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  animation: modalAppear 0.3s ease-out;
+}
+
+@keyframes modalAppear {
+  from { 
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to { 
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-light {
+  background-color: white;
+  color: #1f2937;
+}
+
+.modal-dark {
+  background-color: #374151;
+  color: #f3f4f6;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid;
+}
+
+.modal-light .modal-header {
+  border-color: #e5e7eb;
+}
+
+.modal-dark .modal-header {
+  border-color: #4b5563;
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.modal-light .modal-close-btn {
+  color: #6b7280;
+}
+
+.modal-dark .modal-close-btn {
+  color: #9ca3af;
+}
+
+.modal-light .modal-close-btn:hover {
+  background-color: #f3f4f6;
+}
+
+.modal-dark .modal-close-btn:hover {
+  background-color: #4b5563;
+}
+
+.modal form {
+  padding: 24px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 16px;
+  border: 1px solid;
+}
+
+.modal-light .form-group input,
+.modal-light .form-group select {
+  background-color: white;
+  border-color: #d1d5db;
+  color: #1f2937;
+}
+
+.modal-dark .form-group input,
+.modal-dark .form-group select {
+  background-color: #1f2937;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* Responsive CSS for dashboard scaling and scrolling */
+@media screen and (max-width: 1200px) {
+  .dashboard-container {
+    overflow: auto;
+  }
+  
+  .dashboard {
+    /* Base size */
+    min-width: 1200px;
+    transform-origin: top left;
+  }
+}
+
+/* Responsive media queries for UI components */
+@media screen and (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 20px;
+  }
+  
+  .dashboard-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .btn-text {
+    display: none;
+  }
+  
+  .add-widget-btn {
+    padding: 8px;
+  }
+  
+  .modal {
+    max-width: 90%;
+    margin: 0 16px;
+  }
+}
+
+/* Touch device optimization */
+@media (hover: none) {
+  /* Always show resize handles on touch devices */
+  .resize-handle {
+    opacity: 0.4;
+  }
+  
+  /* Larger touch targets */
+  .btn, 
+  .widget-settings-btn, 
+  .widget-remove-btn,
+  .theme-toggle,
+  .modal-close-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Prevent text selection during drag operations */
+  .widget-container {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+}
+
+/* Small screens */
+@media screen and (max-width: 480px) {
+  .dashboard-header {
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 18px;
+  }
+  
+  .btn {
+    padding: 8px;
+  }
+  
+  .resize-handle {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* Fullscreen mode */
+.dashboard-container:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  background-color: inherit;
+}
+
+.dashboard-container:-moz-full-screen {
+  width: 100vw;
+  height: 100vh;
+  background-color: inherit;
+}
+
+.dashboard-container:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  background-color: inherit;
+}
+
+/* Widget Type-Specific Styles */
+
+/* Line Chart Widget */
+.line-chart-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-container {
+  flex: 1;
+  width: 100%;
+  min-height: 0; /* Needed for flexbox child to shrink */
+}
+
+/* Gauge Widget */
+.gauge-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+}
+
+.gauge {
+  width: 100%;
+  height: 16px;
+  background-color: #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.dashboard-dark .gauge {
+  background-color: #4b5563;
+}
+
+.gauge-fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.gauge-value {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.gauge-value .unit {
+  font-size: 14px;
+  margin-left: 4px;
+  opacity: 0.7;
+}
+
+.gauge-limits {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* Key Metric Widget */
+.key-metric-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  text-align: center;
+  height: 100%;
+}
+
+.key-metric-value {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.key-metric-unit {
+  font-size: 16px;
+  opacity: 0.7;
+  margin-left: 4px;
+}
+
+.key-metric-trend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Animation for widget transitions */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.widget-container {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Scrollbar customization */
+.dashboard-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dashboard-light .dashboard-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.dashboard-dark .dashboard-container::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+.dashboard-light .dashboard-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.dashboard-dark .dashboard-container::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 4px;
+}
+
+.dashboard-container::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+}
+/* Improved responsive grid layout */
+.widgets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 16px;
+  width: 100%;
+  padding: 8px;
+}
+
+/* Force consistent widget visualization regardless of screen size */
+.widget-container {
+  height: 100%;
+  min-height: 250px; 
+}
+
+/* Ensure widget content maintains its visualization type */
+.widget-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+/* Make sure charts use the same visualization across screen sizes */
+.line-chart-container, 
+.chart-container {
+  height: calc(100% - 24px);
+  min-height: 180px;
+  width: 100%;
+}
+
+/* Prevent visualization type from changing in responsive mode */
+@media (max-width: 1200px) {
+  /* Reset the dashboard min-width to allow proper responsive behavior */
+  .dashboard {
+    min-width: auto;
+    transform-origin: unset;
+    width: 100%;
+  }
+  
+  /* Fix grid layout to prevent duplicates */
+  .widgets-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* Ensure consistent widget appearance */
+  .widget-container {
+    width: 100% !important;
+    margin-bottom: 16px;
+    position: relative !important;
+    height: auto !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .widgets-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Fix for context menu positioning */
+.widget-context-menu {
+  position: fixed;
+  z-index: 1000;
+}
+
+/* Fix height of visualizations to maintain consistency */
+.gauge-container, 
+.key-metric-container,
+.line-chart-container {
+  min-height: 200px;
+}
+
+/* Ensure ResponsiveContainer works properly */
+.recharts-responsive-container {
+  width: 100% !important;
+  height: 100% !important;
+}
+/* Modal footer with fixed positioning at bottom */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid #e5e7eb;
+  position: sticky;
+  bottom: 0;
+  background-color: inherit; /* Inherit modal background */
+  margin-top: auto; /* Push to bottom if content is short */
+}
+
+/* Set proper modal structure */
+.modal {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  animation: modalAppear 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh; /* Prevent modal from being taller than viewport */
+}
+
+.modal-content {
+  flex: 1;
+  overflow-y: auto; /* Allow scrolling of content */
+  padding: 24px;
+}
+
+/* Button styling to match the image */
+.btn-secondary {
+  background-color: transparent;
+  border: 1px solid #d1d5db;
+  color: #6b7280;
+  font-weight: 500;
+  padding: 10px 24px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 500;
+  padding: 10px 24px;
+  border-radius: 6px;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
