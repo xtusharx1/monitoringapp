@@ -224,7 +224,7 @@ Click the sun/moon icon in the top-right corner to switch between light and dark
 
 A screen recording demonstrating the application's features is available here:
 
-🔗 [Watch the demo on Google Drive](https://drive.google.com/file/d/1ajFjPpW71xYxYevriZ9B0cJtHgJkHTNP/view?usp=sharing)
+🔗 [Watch the demo on Youtube](https://youtu.be/-5mGQPRXqkE)
 
 The video covers:
 - 📦 Adding, editing, and removing widgets
