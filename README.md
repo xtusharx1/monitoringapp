@@ -83,7 +83,7 @@ The app follows a simple yet scalable architecture:
 📦 
 ├─ .gitignore
 ├─ Backend
-│  └─ server.js
+│  └─ server.mjs
 ├─ README.md
 ├─ package-lock.json
 ├─ package.json
@@ -150,7 +150,7 @@ cd Backend
 
 npm install
 
-node server.js
+node server.mjs
 
 WebSocket will start at:
 
