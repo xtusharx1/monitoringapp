@@ -248,9 +248,10 @@ The video covers:
 
 ## 🚀 Future Improvements
 
-- 🔁 **Connect to real system metrics** – Replace simulated data with actual system info like CPU, memory usage, etc., fetched from a backend.
+- 🔁 **Remote system monitoring** – Currently streams metrics from the local machine; planned support for remote servers like AWS EC2 for real-world production monitoring.
 - ☁️ **Add login and cloud sync** – Allow users to save their dashboard layout online and access it from anywhere.
 - 🧲 **Improve layout snapping** – Add grid or snapping support so widgets align perfectly while moving/resizing.
 - 📤 **Export & import dashboard layouts** – Enable sharing or backing up custom layouts using downloadable/uploadable JSON.
 - 🧩 **Widget & metric customization** – Right now, users can only choose from a limited set of widgets and metrics, but the UI is designed so new ones can easily be added through the dropdown. Long-term goal is to let users define and create their own widgets dynamically.
+
 
