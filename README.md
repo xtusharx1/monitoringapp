@@ -130,7 +130,7 @@ The app follows a simple yet scalable architecture:
 
 git clone https://github.com/xtusharx1/monitoringapp
 
-cd apm-dashboard
+cd monitoringapp
 
 **2. Install Frontend Dependencies**
 
