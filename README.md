@@ -132,12 +132,9 @@ git clone https://github.com/xtusharx1/monitoringapp
 
 cd apm-dashboard
 
------
 **2. Install Frontend Dependencies**
 
 npm install
-
------
 
 **3. Start the Frontend**
 
@@ -147,7 +144,6 @@ App will run on:
 
 👉 http://localhost:3000
 
------
 **4. Start the Backend Server**
 
 cd Backend
